@@ -30,11 +30,6 @@ public class Main {
 			}
 		}
 
-		System.out.println(employeeHM.size());
-		System.out.println("employeeHM.get(\"12000001\").name :"+employeeHM.get("12000001").name);
-		System.out.println("employeeHM.get(\"12000001\").birthday :"+employeeHM.get("12000001").birthday);
-		System.out.println("employeeHM.get(\"12000001\").certi :"+employeeHM.get("12000001").certi);
-
 	}
 
 }
