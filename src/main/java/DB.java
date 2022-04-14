@@ -1,8 +1,21 @@
-
 public class DB {
-	
-	public void ADD() {};
-	public void DEL() {};
-	public void SCH() {};
-	public void MOD() {};
+
+
+	public static void ADD(String[] tempsplit) {
+		// TODO Auto-generated method stub
+		if(tempsplit.length < 10) System.out.println("ADD_FAIL :: Insert Null Data");
+		EmployeeInfo newEmployeeInfo = new EmployeeInfo(tempsplit[4], tempsplit[5], tempsplit[6], tempsplit[7], tempsplit[8], tempsplit[9]);
+		Main.employeeHM.put(tempsplit[4], newEmployeeInfo);
+		Main.employeeHM.put(tempsplit[5], newEmployeeInfo);
+
+	}
+	public void DEL() {
+	}
+
+	public void SCH() {
+	}
+
+	public void MOD() {
+	}
+
 }
