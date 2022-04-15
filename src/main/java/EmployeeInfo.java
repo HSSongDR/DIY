@@ -2,15 +2,6 @@ import java.util.Objects;
 
 import constants.Constants;
 
-enum COL{
-	employeeNum
-	,name
-	,cl
-	,phoneNum
-	,birthday
-	,certi
-}
-
 public class EmployeeInfo {
 	
 	private String employeeNum;
@@ -71,27 +62,6 @@ public class EmployeeInfo {
 	}
 	
 	
-	public String getInfo(int num) {
-		
-		switch (num) {
-		case 1: 
-			return getEmployeeNum();
-		case 2: 
-			return getName();
-		case 3: 
-			return getCl();
-		case 4: 
-			return getPhoneNum();
-		case 5: 
-			return getBirthday();
-		case 6: 
-			return getCerti();
-		}
-			
-		return num+"";
-
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(employeeNum);
