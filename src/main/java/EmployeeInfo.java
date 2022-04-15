@@ -1,19 +1,15 @@
 import java.util.Objects;
-
 import constants.Constants;
 
 public class EmployeeInfo {
-	
 	private String employeeNum;
 	private String name;
 	private String cl;
 	private String phoneNum;
 	private String birthday;
 	private String certi;
-	
-	
 	public EmployeeInfo() {};
-	
+
 	public EmployeeInfo(String employeeNum, String name, String cl, String phoneNum, String birthday, String certi) {
 		super();
 		this.employeeNum = employeeNum;
@@ -23,7 +19,7 @@ public class EmployeeInfo {
 		this.birthday = birthday;
 		this.certi = certi;
 	}
-	
+
 	public String getEmployeeNum() {
 		return employeeNum;
 	}
@@ -60,8 +56,8 @@ public class EmployeeInfo {
 	public void setCerti(String certi) {
 		this.certi = certi;
 	}
-	
-	
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(employeeNum);
@@ -82,16 +78,11 @@ public class EmployeeInfo {
 	@Override
 	public String toString() {
 
-		return employeeNum + Constants.DELIMITER_COMMA 
-				+ name + Constants.DELIMITER_COMMA 
-				+ cl+Constants.DELIMITER_COMMA 
-				+ phoneNum+Constants.DELIMITER_COMMA 
-				+ birthday+Constants.DELIMITER_COMMA 
+		return employeeNum + Constants.DELIMITER_COMMA
+				+ name + Constants.DELIMITER_COMMA
+				+ cl+Constants.DELIMITER_COMMA
+				+ phoneNum+Constants.DELIMITER_COMMA
+				+ birthday+Constants.DELIMITER_COMMA
 				+ certi;
 	}
-	
-	
-	
-	
-	
 }
