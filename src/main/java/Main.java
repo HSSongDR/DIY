@@ -20,6 +20,7 @@ public class Main {
 
 		for (int i = 0; i < n; i++) {
 			String temp = br.readLine();
+			System.out.println(temp);
 			String[] tempsplit = temp.split(",");
 
 			if (tempsplit[0].equals("ADD")) {
@@ -32,18 +33,19 @@ public class Main {
 
 			}
 		}
+
 /*
 		System.out.println(employeeHM.size());
-		System.out.println("employeeHM.get(\"12000001\").name :" + employeeHM.get("12000001").getName());
-		System.out.println("employeeHM.get(\"12000001\").birthday :" + employeeHM.get("12000001").getBirthday());
-		System.out.println("employeeHM.get(\"12000001\").certi :" + employeeHM.get("12000001").getCerti());
-		if (searchHM.get("FPHONE1234").size() > 0) {
-			for (String getNumber : searchHM.get("FPHONE1234")) {
+		System.out.println("employeeHM.get(\"12000001\").name :" + employeeHM.get("15123099").getName());
+		System.out.println("employeeHM.get(\"12000001\").birthday :" + employeeHM.get("15123099").getBirthday());
+		System.out.println("employeeHM.get(\"12000001\").certi :" + employeeHM.get("15123099").getCerti());
+		if (searchHM.get("phoneNumf_3112").size() > 0) {
+			for (String getNumber : searchHM.get("phoneNumf_3112")) {
 				System.out.println("searchHM.get(\"1234\") :" + getNumber);
 			}
 		}
-
- */
 	}
+	
+ */
 
 }

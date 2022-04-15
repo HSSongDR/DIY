@@ -5,41 +5,42 @@ public class DB {
 
     private static void createSearchHM(EmployeeInfo newEmployeeInfo) {
         String sEmployeeNum = newEmployeeInfo.getEmployeeNum();
+
         String name = newEmployeeInfo.getName();
-        checkSearchHM(name, sEmployeeNum);
+        checkSearchHM("name_"+name, sEmployeeNum);
 
-        String fname = "FNAME"+name.split(" ")[0];
-        checkSearchHM(fname, sEmployeeNum);
+        String namef = name.split(" ")[0];
+        checkSearchHM("namef_"+namef, sEmployeeNum);
 
-        String lname = "LNAME"+name.split(" ")[1];
-        checkSearchHM(lname, sEmployeeNum);
+        String lname = name.split(" ")[1];
+        checkSearchHM("namel_"+lname, sEmployeeNum);
 
         String cl = newEmployeeInfo.getCl();
-        checkSearchHM(cl, sEmployeeNum);
+        checkSearchHM("cl"+cl, sEmployeeNum);
 
         String phoneNum = newEmployeeInfo.getPhoneNum();
-        checkSearchHM(phoneNum, sEmployeeNum);
+        checkSearchHM("phoneNum_"+phoneNum, sEmployeeNum);
 
-        String fphone = "FPHONE"+phoneNum.split("-")[1];
-        checkSearchHM(fphone, sEmployeeNum);
+        String fphone = phoneNum.split("-")[1];
+        checkSearchHM("phoneNumf_"+fphone, sEmployeeNum);
 
-        String lphone = "LPHONE"+phoneNum.split("-")[2];
-        checkSearchHM(lphone, sEmployeeNum);
+        String lphone = phoneNum.split("-")[2];
+        checkSearchHM("phoneNuml_"+lphone, sEmployeeNum);
 
-        String birthday = "BIRTH" + newEmployeeInfo.getBirthday();
-        checkSearchHM(birthday, sEmployeeNum);
+        String birthday = newEmployeeInfo.getBirthday();
+        checkSearchHM("birthday_"+birthday, sEmployeeNum);
 
-        String ybirthday = "Y" + birthday.substring(0, 4);
-        checkSearchHM(ybirthday, sEmployeeNum);
+        String ybirthday = birthday.substring(0, 4);
+        checkSearchHM("birthdayy_"+ybirthday, sEmployeeNum);
 
         String mbirthday = "M" + birthday.substring(4, 6);
-        checkSearchHM(mbirthday, sEmployeeNum);
+        checkSearchHM("birthdaym_"+mbirthday, sEmployeeNum);
 
         String dbirthday = "D" + birthday.substring(6, 8);
-        checkSearchHM(dbirthday, sEmployeeNum);
+        checkSearchHM("birthdayd_"+dbirthday, sEmployeeNum);
 
         String certi = newEmployeeInfo.getCerti();
-        checkSearchHM(certi, sEmployeeNum);
+        checkSearchHM("cl_"+certi, sEmployeeNum);
 
     }
 
