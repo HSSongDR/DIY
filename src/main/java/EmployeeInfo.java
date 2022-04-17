@@ -10,12 +10,10 @@ public class EmployeeInfo {
 	private String phoneNum;
 	private String birthday;
 	private String certi;
-	
-	
-	public EmployeeInfo() {};
-	
+
 	public EmployeeInfo(String employeeNum, String name, String cl, String phoneNum, String birthday, String certi) {
 		super();
+
 		this.employeeNum = employeeNum;
 		this.name = name;
 		this.cl = cl;
@@ -23,7 +21,7 @@ public class EmployeeInfo {
 		this.birthday = birthday;
 		this.certi = certi;
 	}
-	
+
 	public String getEmployeeNum() {
 		return employeeNum;
 	}
@@ -93,5 +91,5 @@ public class EmployeeInfo {
 	
 	
 	
-	
+
 }

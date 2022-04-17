@@ -1,7 +1,12 @@
-
+import java.util.*;
 import java.util.ArrayList;
+import constants.Constants;
+
 
 public class DB {
+    static HashMap<String, EmployeeInfo> employeeHM;
+    static HashMap<String, ArrayList<String>> searchHM;
+
 
     private static void createSearchHM(EmployeeInfo newEmployeeInfo) {
         String sEmployeeNum = newEmployeeInfo.getEmployeeNum();
@@ -68,9 +73,70 @@ public class DB {
     public void DEL() {
     }
 
-    public void SCH() {
-    }
-
     public void MOD() {
     }
+
+    private static String FindSearchKey(String op2,String searchColumn,String asisKey){
+        String ret="";
+        if(searchColumn.equals(Constants.EMP_NUM)) {
+            ret=asisKey;
+        }
+        if(searchColumn.equals(Constants.EMP_NAME)) {
+            if(op2.equals(" "))ret="name_";
+            if(op2.equals(Constants.OPT2_FIRST_NAME))ret="namef_";
+            if(op2.equals(Constants.OPT2_LAST_NAME))ret="namel_";
+            ret+=asisKey;
+
+        }
+        if(searchColumn.equals(Constants.EMP_CL)) {
+            ret="cl_"+asisKey;
+        }
+        if(searchColumn.equals(Constants.EMP_PHONE)) {
+            if(op2.equals(" "))ret="phoneNum_";
+            if(op2.equals(Constants.OPT2_MID_PHONE))ret="phoneNumf_";
+            if(op2.equals(Constants.OPT2_LAST_PHONE))ret="phoneNuml_";
+            ret+=asisKey;
+        }
+        if(searchColumn.equals(Constants.EMP_BIRTH)) {
+            if(op2.equals(" "))ret="birthday_";
+            if(op2.equals(Constants.OPT2_BIRTH_YEAR))ret="birthdayy_";
+            if(op2.equals(Constants.OPT2_BIRTH_MON))ret="birthdaym_";
+            if(op2.equals(Constants.OPT2_BIRTH_DAY))ret="birthdayd_";
+            ret+=asisKey;
+        }
+        if(searchColumn.equals(Constants.EMP_CERTI)) {
+            ret+="certi_"+asisKey;
+        }
+        return ret;
+    }
+
+	private LinkedHashMap<String, EmployeeInfo> employeeDbLinkedHash;
+
+	public  static List<String> SCH(String opt1, String opt2, String opt3, String colName, String colValue) {
+		List<String> resultEmployNumList = new ArrayList<>();
+
+
+        if(colName.compareTo("employnum")==0){
+            if(Main.employeeHM.get(colValue) != null){
+                resultEmployNumList.add(Main.employeeHM.get(colValue).getEmployeeNum());
+            }
+        }
+        else{
+            String searchkey = FindSearchKey(opt2, colName, colValue);
+            if (Main.searchHM.get(searchkey) != null) {
+                resultEmployNumList = Main.searchHM.get(searchkey);
+            }
+        }
+
+
+		if(resultEmployNumList.size() == 0){
+			System.out.print("NONE");
+		}
+		else {
+			System.out.print(resultEmployNumList.size());
+		}
+
+		return resultEmployNumList;
+	}
+
 }
