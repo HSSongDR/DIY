@@ -11,10 +11,10 @@ public class DB extends Main {
 
     private static PriorityQueue<String> employPQ;
 
-    private static String[] searchKey = {"name", "namef", "namel", "cl", "phoneNum", "phoneNumf", "phoneNuml", "birthday", "birthdayy", "birthdaym", "birthdayd", "certi"};
+    private static String[] searchKey = {"name", "namef", "namel", "cl", "phoneNum", "phoneNumm", "phoneNuml", "birthday", "birthdayy", "birthdaym", "birthdayd", "certi"};
     private static String[] makeSubKey = {"name", "phoneNum", "birthday"};
     private static String[] nameSubKey = {"namef", "namel"};
-    private static String[] phoneSubKey = {"phoneNumf", "phoneNuml"};
+    private static String[] phoneSubKey = {"phoneNumm", "phoneNuml"};
     private static String[] birthSubKey = {"birthdayy", "birthdaym", "birthdayd"};
 
 
@@ -92,22 +92,22 @@ public class DB extends Main {
         ArrayList<String> aResult = schResult(tempsplit);
 
         //print option
-        return schPrint(aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+        return schPrint("SCH", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
     }
 
-    private static String schPrint(ArrayList<String> aResult, String sOption) {
+    private static String schPrint(String mod, ArrayList<String> aResult, String sOption) {
         String returnString = "";
-        if (aResult.size() == 0) return "NONE";
+        if (aResult.size() == 0) return mod + "," + "NONE"+ "\n";
         if (sOption.equals("STRING")) {
 
             // 전체 LIST의 EMPLOYEE NO 기준으로 정렬하는 기능 추가 필요함.
             int maxresult = 5;
             if (aResult.size() < 5) maxresult = aResult.size();
             for (int i = 0; i < maxresult; i++) {
-                returnString += employeeHM.get(aResult.get(i)).toString();
+                returnString += mod + "," + employeeHM.get(aResult.get(i)).toString() + "\n";
             }
         } else if (sOption.equals("NUMBER")) {
-            returnString = aResult.size() + "";
+            returnString = mod + "," + aResult.size() + "\n";
         }
 
         return returnString;
@@ -148,7 +148,7 @@ public class DB extends Main {
         // 대상 조회
         ArrayList<String> aResult = schResult(tempsplit);
         // 프린트 옵션
-        String sSearchResult = schPrint(aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+        String sSearchResult = schPrint("DEL", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
 
         for (String empNum : aResult) {
             employeeHM.get(empNum).setRemoveFlag();
@@ -162,7 +162,7 @@ public class DB extends Main {
         // 대상 조회
         ArrayList<String> aResult = schResult(tempsplit);
         // 프린트 옵션
-        String sSearchResult = schPrint(aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+        String sSearchResult = schPrint("MOD", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
 
 
         String modifyKey = tempsplit[6];

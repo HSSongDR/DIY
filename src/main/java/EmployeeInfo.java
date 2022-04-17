@@ -9,7 +9,7 @@ public class EmployeeInfo {
 	private String namel;
 	private String cl;
 	private String phoneNum;
-	private String phoneNumf;
+	private String phoneNumm;
 	private String phoneNuml;
 	private String birthday;
 	private String birthdayy;
@@ -26,7 +26,7 @@ public class EmployeeInfo {
 		this.namel = name.split(" ")[1];
 		this.cl = cl;
 		this.phoneNum = phoneNum;
-		this.phoneNumf = phoneNum.split("-")[1];
+		this.phoneNumm = phoneNum.split("-")[1];
 		this.phoneNuml = phoneNum.split("-")[2];
 		this.birthday = birthday;
 		this.birthdayy = birthday.substring(0, 4);
@@ -42,7 +42,7 @@ public class EmployeeInfo {
 		else if(sObject.equals("namel")) return namel;
 		else if(sObject.equals("cl")) return cl;
 		else if(sObject.equals("phoneNum")) return phoneNum;
-		else if(sObject.equals("phoneNumf")) return phoneNumf;
+		else if(sObject.equals("phoneNumm")) return phoneNumm;
 		else if(sObject.equals("phoneNuml")) return phoneNuml;
 		else if(sObject.equals("birthday")) return birthday;
 		else if(sObject.equals("birthdayy")) return birthdayy;
@@ -64,10 +64,10 @@ public class EmployeeInfo {
 		else if(sObject.equals("cl")) this.cl = changeValue;
 		else if(sObject.equals("phoneNum")){
 			this.phoneNum = changeValue;
-			this.phoneNumf = phoneNum.split("-")[1];
+			this.phoneNumm = phoneNum.split("-")[1];
 			this.phoneNuml = phoneNum.split("-")[2];
 		}
-		else if(sObject.equals("phoneNumf")) this.phoneNumf = changeValue;
+		else if(sObject.equals("phoneNumm")) this.phoneNumm = changeValue;
 		else if(sObject.equals("phoneNuml")) this.phoneNuml = changeValue;
 		else if(sObject.equals("birthday")){
 			this.birthday = changeValue;

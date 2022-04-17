@@ -12,10 +12,10 @@ public class Main {
     private static void printOut(String printString) {
 
         try { // 파일 객체 생성
-            System.out.println(printString);
+            System.out.print(printString);
             File file = new File("./DIY/src/output.txt");
             FileWriter fw = new FileWriter(file, true);
-            fw.write(printString + "\n");
+            fw.write(printString);
             fw.flush();
             fw.close();
         } catch (Exception e) {
@@ -38,11 +38,11 @@ public class Main {
             if (tempsplit[0].equals(CMD_ADD)) {
                 DB.ADD(tempsplit);
             } else if (tempsplit[0].equals(CMD_SCH)) {
-                printOut("SCH, " + DB.SCH(tempsplit));
+                printOut(DB.SCH(tempsplit));
             } else if (tempsplit[0].equals(CMD_DEL)) {
-                printOut("DEL, " + DB.DEL(tempsplit));
+                printOut(DB.DEL(tempsplit));
             } else if (tempsplit[0].equals(CMD_MOD)) {
-                printOut("MOD, " + DB.MOD(tempsplit));
+                printOut(DB.MOD(tempsplit));
             }
         }
 //
