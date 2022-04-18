@@ -1,12 +1,22 @@
+package Service;
 
-import java.io.*;
+import static constants.Constants.CMD_ADD;
+import static constants.Constants.CMD_DEL;
+import static constants.Constants.CMD_MOD;
+import static constants.Constants.CMD_SCH;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-import static constants.Constants.*;
+import Service.DB;
+import VO.EmployeeInfo;
 
 class cmpString implements Comparable<cmpString>{
     String employeeNum;
@@ -41,8 +51,8 @@ class cmpString implements Comparable<cmpString>{
 }
 
 public class Main {
-    protected static HashMap<String, EmployeeInfo> employeeHM;
-    protected static HashMap<String, PriorityQueue<cmpString>> searchHM;
+    public static HashMap<String, EmployeeInfo> employeeHM;
+    public static HashMap<String, PriorityQueue<cmpString>> searchHM;
 
     private static String inputFilePath = "./src/input.txt";
     private static String outputFilePath = "./src/output.txt";
