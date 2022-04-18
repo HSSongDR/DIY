@@ -1,8 +1,11 @@
+package Service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+
+import VO.EmployeeInfo;
 
 import static constants.Constants.*;
 
@@ -39,8 +42,8 @@ class cmpString implements Comparable<cmpString>{
 }
 
 public class Main {
-    protected static HashMap<String, EmployeeInfo> employeeHM;
-    protected static HashMap<String, PriorityQueue<cmpString>> searchHM;
+    public static HashMap<String, EmployeeInfo> employeeHM;
+    public static HashMap<String, PriorityQueue<cmpString>> searchHM;
 
 
 

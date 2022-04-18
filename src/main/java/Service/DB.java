@@ -1,11 +1,10 @@
+package Service;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.PriorityQueue;
 
-import static constants.Constants.*;
+import VO.EmployeeInfo;
+
 
 public class DB extends Main {
 
@@ -65,8 +64,9 @@ public class DB extends Main {
             int maxresult = 5;
             if (aResult.size() < 5) maxresult = aResult.size();
             for (int i = 0; i < maxresult; i++) {
-                returnString += mod + "," + employeeHM.get(aResult.poll()).toString() + "\n";
+            	returnString += mod + "," + employeeHM.get(aResult.poll().getEmployeeNum()).toString() + "\n";
             }
+            
         } else if (sOption.equals("NUMBER")) {
             returnString = mod + "," + aResult.size() + "\n";
         }
@@ -127,7 +127,7 @@ public class DB extends Main {
     }
 
 
-    public static String MODbyPQ(String[] tempsplit) {
+    public static String MOD(String[] tempsplit) {
         // 대상 조회
         PriorityQueue<cmpString> aResult = schResult(tempsplit);
         // 프린트 옵션

@@ -1,3 +1,4 @@
+package VO;
 import java.util.Objects;
 import constants.Constants;
 
