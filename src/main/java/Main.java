@@ -1,5 +1,7 @@
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -42,13 +44,14 @@ public class Main {
     protected static HashMap<String, EmployeeInfo> employeeHM;
     protected static HashMap<String, PriorityQueue<cmpString>> searchHM;
 
-
+    private static String inputFilePath = "./src/input.txt";
+    private static String outputFilePath = "./src/output.txt";
+    private static String answerFilePath = "./src/answer.txt";
 
     private static void printOut(String printString) {
-
         try { // 파일 객체 생성
             System.out.print(printString);
-            File file = new File("./DIY/src/output.txt");
+            File file = new File(outputFilePath);
             FileWriter fw = new FileWriter(file, true);
             fw.write(printString);
             fw.flush();
@@ -59,50 +62,69 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-
-        //BufferedReader br = new BufferedReader(new FileReader("./DIY/src/input.txt"));
         employeeHM = new HashMap<>();
         searchHM = new HashMap<>();
-//        //pq order 확인
-//        System.out.println("012345".substring(0,2));
-//        PriorityQueue <cmpString> pq= new PriorityQueue<>();
-//        pq.offer(new cmpString("90123456"));
-//        pq.offer(new cmpString("72123456"));
-//        pq.offer(new cmpString("00123456"));
-//        pq.offer(new cmpString("00123456"));
-//        pq.offer(new cmpString("00323456"));
-//        pq.offer(new cmpString("00023456"));
-//        while (!pq.isEmpty()){
-//            System.out.println(pq.poll().getEmployeeNum());
-//        }
 
-//        while (true) {
-//            String temp = br.readLine();
-//            if (temp == null) break;
-////            System.out.println(temp);
-//            String[] tempsplit = temp.split(",");
-//
-//            if (tempsplit[0].equals(CMD_ADD)) {
-//                DB.ADD(tempsplit);
-//            } else if (tempsplit[0].equals(CMD_SCH)) {
-//                printOut(DB.SCH(tempsplit));
-//            } else if (tempsplit[0].equals(CMD_DEL)) {
-//                printOut(DB.DEL(tempsplit));
-//            } else if (tempsplit[0].equals(CMD_MOD)) {
-//                printOut(DB.MOD(tempsplit));
-//            }
-//        }
-//
-//        System.out.println(employeeHM.size());
-//        System.out.println("employeeHM.get(\"12000001\").name :" + employeeHM.get("15123099").getName());
-//        System.out.println("employeeHM.get(\"12000001\").birthday :" + employeeHM.get("15123099").getBirthday());
-//        System.out.println("employeeHM.get(\"12000001\").certi :" + employeeHM.get("15123099").getCerti());
-//        if (searchHM.get("phoneNumf_3112").size() > 0) {
-//            for (String getNumber : searchHM.get("phoneNumf_3112")) {
-//                System.out.println("searchHM.get(\"1234\") :" + getNumber);
-//                printOut(getNumber);
-//            }
-//        }
+        systemTest();
+    }
 
+    private static void systemTest() throws IOException {
+
+
+
+
+        BufferedReader br = new BufferedReader(new FileReader(inputFilePath));
+        try {
+            Files.delete(Paths.get(outputFilePath));
+        }catch (Exception e){
+
+        }
+
+        while (true) {
+            String temp = br.readLine();
+            if (temp == null) break;
+            System.out.println(temp);
+            String[] tempsplit = temp.split(",");
+
+            if (tempsplit[0].equals(CMD_ADD)) {
+                DB.ADD(tempsplit);
+            } else if (tempsplit[0].equals(CMD_SCH)) {
+                printOut(DB.SCH(tempsplit));
+            } else if (tempsplit[0].equals(CMD_DEL)) {
+                printOut(DB.DEL(tempsplit));
+            } else if (tempsplit[0].equals(CMD_MOD)) {
+                printOut(DB.MOD(tempsplit));
+            }
+        }
+
+
+        if(compareTwoFiles(answerFilePath, outputFilePath)){
+            System.out.println("Pass");
+        }
+        else{
+            System.out.println("Fail");
+        }
+
+
+    }
+
+    private static boolean compareTwoFiles(String filePath1, String filePath2) throws IOException {
+
+        BufferedReader answer = new BufferedReader(new FileReader(filePath1));
+        BufferedReader output = new BufferedReader(new FileReader(filePath2));
+
+        String line1 = "", line2 = "";
+        int linenumber =0;
+        while ((line1 = output.readLine()) != null) {
+            line2 = answer.readLine();
+            if (line2 == null || !line1.equals(line2)) {
+                System.out.println("not matched at line " + linenumber);
+                System.out.println("expected : " + line2);
+                System.out.println("your out : " + line1);
+                return false;
+            }
+            linenumber++;
+        }
+        return true;
     }
 }
