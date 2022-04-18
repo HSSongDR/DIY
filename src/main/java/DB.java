@@ -24,45 +24,15 @@ public class DB extends Main {
         for (String search : searchKey) {
             checkSearchHM(search + newEmployeeInfo.getObj(search), sEmployeeNum);
         }
-//        String sEmployeeNum = newEmployeeInfo.getEmployeeNum();
-//
-//
-//        String name = newEmployeeInfo.name;
-//        checkSearchHM("name" + name, sEmployeeNum);
-//
-//        String namef = name.split(" ")[0];
-//        checkSearchHM("namef" + namef, sEmployeeNum);
-//
-//        String lname = name.split(" ")[1];
-//        checkSearchHM("namel" + lname, sEmployeeNum);
-//
-//        String cl = newEmployeeInfo.cl;
-//        checkSearchHM("cl" + cl, sEmployeeNum);
-//
-//        String phoneNum = newEmployeeInfo.phoneNum;
-//        checkSearchHM("phoneNum" + phoneNum, sEmployeeNum);
-//
-//        String phoneNumf = phoneNum.split("-")[1];
-//        checkSearchHM("phoneNumf" + phoneNumf, sEmployeeNum);
-//
-//        String phoneNuml = phoneNum.split("-")[2];
-//        checkSearchHM("phoneNuml" + phoneNuml, sEmployeeNum);
-//
-//        String birthday = newEmployeeInfo.birthday;
-//        checkSearchHM("birthday" + birthday, sEmployeeNum);
-//
-//        String birthdayy = birthday.substring(0, 4);
-//        checkSearchHM("birthdayy" + birthdayy, sEmployeeNum);
-//
-//        String birthdaym = birthday.substring(4, 6);
-//        checkSearchHM("birthdaym" + birthdaym, sEmployeeNum);
-//
-//        String birthdayd = birthday.substring(6, 8);
-//        checkSearchHM("birthdayd" + birthdayd, sEmployeeNum);
-//
-//        String certi = newEmployeeInfo.getCerti();
-//        String certi = newEmployeeInfo.certi;
-//        checkSearchHM("certi" + certi, sEmployeeNum);
+
+    }
+
+    private static void createSearchHMbyPQ(EmployeeInfo newEmployeeInfo) {
+
+        String sEmployeeNum = newEmployeeInfo.getObj("employeeNum");
+        for (String search : searchKey) {
+            checkSearchHMbyPQ(search + newEmployeeInfo.getObj(search), sEmployeeNum);
+        }
     }
 
     private static void checkSearchHM(String searchkey, String newEmployeeNum) {
@@ -72,6 +42,16 @@ public class DB extends Main {
             ArrayList<String> list = new ArrayList<String>();
             list.add(newEmployeeNum);
             searchHM.put(searchkey, list);
+        }
+    }
+
+    private static void checkSearchHMbyPQ(String searchkey, String newEmployeeNum) {
+        if (searchHMbyPQ.containsKey(searchkey)) {
+            searchHMbyPQ.get(searchkey).offer(new cmpString(newEmployeeNum));
+        } else {
+            PriorityQueue<cmpString> pq = new PriorityQueue<>();
+            pq.offer(new cmpString(newEmployeeNum));
+            searchHMbyPQ.put(searchkey, pq);
         }
     }
 
@@ -86,6 +66,17 @@ public class DB extends Main {
 
         createSearchHM(newEmployeeInfo);
     }
+    public static void ADDbyPQ(String[] tempsplit) {
+
+
+        if (tempsplit.length < 10) System.out.println("ADD_FAIL :: Insert Null Data");
+
+        EmployeeInfo newEmployeeInfo =
+                new EmployeeInfo(tempsplit[4], tempsplit[5], tempsplit[6], tempsplit[7], tempsplit[8], tempsplit[9]);
+        employeeHM.put(tempsplit[4], newEmployeeInfo);
+
+        createSearchHMbyPQ(newEmployeeInfo);
+    }
 
     public static String SCH(String[] tempsplit) {
 //        SCH,-p,-d, ,birthday,04
@@ -93,6 +84,14 @@ public class DB extends Main {
 
         //print option
         return schPrint("SCH", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+    }
+
+    public static String SCHbyPQ(String[] tempsplit) {
+//        SCH,-p,-d, ,birthday,04
+        PriorityQueue<cmpString> aResult = schResultbyPQ(tempsplit);
+
+        //print option
+        return schPrintbyPQ("SCH", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
     }
 
     private static String schPrint(String mod, ArrayList<String> aResult, String sOption) {
@@ -105,6 +104,24 @@ public class DB extends Main {
             if (aResult.size() < 5) maxresult = aResult.size();
             for (int i = 0; i < maxresult; i++) {
                 returnString += mod + "," + employeeHM.get(aResult.get(i)).toString() + "\n";
+            }
+        } else if (sOption.equals("NUMBER")) {
+            returnString = mod + "," + aResult.size() + "\n";
+        }
+
+        return returnString;
+    }
+
+    private static String schPrintbyPQ(String mod, PriorityQueue<cmpString> aResult, String sOption) {
+        String returnString = "";
+        if (aResult.size() == 0) return mod + "," + "NONE"+ "\n";
+        if (sOption.equals("STRING")) {
+
+            // 전체 LIST의 EMPLOYEE NO 기준으로 정렬하는 기능 추가 필요함.
+            int maxresult = 5;
+            if (aResult.size() < 5) maxresult = aResult.size();
+            for (int i = 0; i < maxresult; i++) {
+                returnString += mod + "," + employeeHM.get(aResult.poll()).toString() + "\n";
             }
         } else if (sOption.equals("NUMBER")) {
             returnString = mod + "," + aResult.size() + "\n";
@@ -143,6 +160,36 @@ public class DB extends Main {
         }
         return resultList;
     }
+    private static PriorityQueue<cmpString> schResultbyPQ(String[] tempsplit) {
+
+//        employPQ = new PriorityQueue<>();
+        PriorityQueue<cmpString> resultList=new PriorityQueue<>();
+        String searchKey = tempsplit[4];
+
+        if (!tempsplit[2].equals(" ")) {
+            searchKey += tempsplit[2].substring(1, 2);
+        }
+        String searchValue = searchKey + tempsplit[5];
+
+        if (searchKey.equals("employeeNum")) {
+            if (employeeHM.containsKey(tempsplit[5]) && !employeeHM.get(tempsplit[5]).getRemoveFlag()) {
+                resultList.offer(new cmpString(tempsplit[5]));
+            }
+        } else if (searchHM.containsKey(searchValue)) {
+            ArrayList<cmpString> cache=new ArrayList<>();
+            while(!searchHMbyPQ.get(searchValue).isEmpty()){
+                String sEmpNum = searchHMbyPQ.get(searchValue).poll().getEmployeeNum();
+                if (employeeHM.get(sEmpNum).getRemoveFlag()) continue;
+                if (!employeeHM.get(sEmpNum).getObj(searchKey).equals(tempsplit[5])) continue;
+                cache.add(new cmpString(sEmpNum));
+                resultList.offer(new cmpString(sEmpNum));
+            }
+            for(cmpString tmp:cache){
+                searchHMbyPQ.get(searchValue).offer(tmp);
+            }
+        }
+        return resultList;
+    }
 
     public static String DEL(String[] tempsplit) {
         // 대상 조회
@@ -152,6 +199,19 @@ public class DB extends Main {
 
         for (String empNum : aResult) {
             employeeHM.get(empNum).setRemoveFlag();
+        }
+
+        return sSearchResult;
+    }
+
+    public static String DELbyPQ(String[] tempsplit) {
+        // 대상 조회
+        PriorityQueue<cmpString> aResult = schResultbyPQ(tempsplit);
+        // 프린트 옵션
+        String sSearchResult = schPrintbyPQ("DEL", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+
+        for (cmpString empNum : aResult) {
+            employeeHM.get(empNum.getEmployeeNum()).setRemoveFlag();
         }
 
         return sSearchResult;
@@ -195,5 +255,41 @@ public class DB extends Main {
         return sSearchResult;
     }
 
+    public static String MODbyPQ(String[] tempsplit) {
+        // 대상 조회
+        PriorityQueue<cmpString> aResult = schResultbyPQ(tempsplit);
+        // 프린트 옵션
+        String sSearchResult = schPrintbyPQ("MOD", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+
+
+        String modifyKey = tempsplit[6];
+        if (!tempsplit[2].equals(" ")) {
+            modifyKey += tempsplit[2].substring(1, 2);
+        }
+
+
+        //MOD,-p, , ,name,FB NTAWR,cl,CL3
+        for (cmpString empNum : aResult) {
+            //원본 변경
+            employeeHM.get(empNum.getEmployeeNum()).setObj(tempsplit[6], tempsplit[7]);
+
+            checkSearchHMbyPQ(modifyKey + employeeHM.get(empNum.getEmployeeNum()).getObj(modifyKey), empNum.getEmployeeNum());
+            if (modifyKey.equals("name")) {
+                for (String subkey : nameSubKey) {
+                    checkSearchHMbyPQ(subkey + employeeHM.get(empNum.getEmployeeNum()).getObj(subkey), empNum.getEmployeeNum());
+                }
+            } else if (modifyKey.equals("phoneNum")) {
+                for (String subkey : phoneSubKey) {
+                    checkSearchHMbyPQ(subkey + employeeHM.get(empNum.getEmployeeNum()).getObj(subkey), empNum.getEmployeeNum());
+                }
+            } else if (modifyKey.equals("birthday")) {
+                for (String subkey : birthSubKey) {
+                    checkSearchHMbyPQ(subkey + employeeHM.get(empNum.getEmployeeNum()).getObj(subkey), empNum.getEmployeeNum());
+                }
+            }
+        }
+
+        return sSearchResult;
+    }
 
 }
