@@ -5,12 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Service.DB;
 import Service.Main;
-import VO.EmployeeInfo;
 
 
 class MainTest {
@@ -50,7 +48,6 @@ class MainTest {
 	
 	@Test
 	void AddTest() {
-		init();
 		
 		String tmp = "ADD, , , ,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV";
 		String [] temp = tmp.split(",");
@@ -62,7 +59,6 @@ class MainTest {
 	@Test
 	void DelTest() {
 		
-		init();
 		
 		String t1 = "DEL, , , ,employeeNum,18115040";
 		String t2 = "DEL,-p, , ,employeeNum,18115040";
@@ -77,17 +73,19 @@ class MainTest {
 	@Test
 	void ModTest() {
 		
-		init();
 		
 		String t1 = "MOD,-p, , ,name,FB NTAWR,birthday,20050520";
 		String t2 = "MOD,-p, , ,name,FB NTAWR,cl,CL3";
 		String t3 = "MOD,-p, , ,employeeNum,08123556,birthday,20110706";
+		String t4 = "MOD,-p, , ,employeeNum,18115040,birthday,12345678";
+		
+		
 		
 		assertEquals("MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO", DB.MOD(t1.split(",")).toString().trim());
 		//Main.employeeHM.get("17112609").setBirthday("20050520");
 		assertEquals("MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO", DB.MOD(t2.split(",")).toString().trim());
 		assertEquals("MOD,08123556,WN XV,CL1,010-7986-5047,20100614,PRO", DB.MOD(t3.split(",")).toString().trim());
-		
+		assertEquals("MOD,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV", DB.MOD(t4.split(",")).toString().trim());
 		assertEquals("19", Main.employeeHM.size()+"");
 		
 	}
@@ -95,8 +93,6 @@ class MainTest {
 	
 	@Test
 	void SchTest() {
-		
-		init();
 			
 		String t1 = "SCH,-p,-d, ,birthday,04";
 		String t2 = "SCH, , , ,employeeNum,79110836";

@@ -3,8 +3,8 @@ package Service;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import VO.EmployeeInfo;
 
+import VO.EmployeeInfo;
 
 public class DB extends Main {
 
@@ -64,9 +64,8 @@ public class DB extends Main {
             int maxresult = 5;
             if (aResult.size() < 5) maxresult = aResult.size();
             for (int i = 0; i < maxresult; i++) {
-            	returnString += mod + "," + employeeHM.get(aResult.poll().getEmployeeNum()).toString() + "\n";
+                returnString += mod + "," + employeeHM.get(aResult.poll().getEmployeeNum()).toString() + "\n";
             }
-            
         } else if (sOption.equals("NUMBER")) {
             returnString = mod + "," + aResult.size() + "\n";
         }
