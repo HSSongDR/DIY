@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Service.DB;
@@ -13,7 +15,10 @@ import VO.EmployeeInfo;
 
 class MainTest {
 	
-	void init() {
+	
+	
+	@BeforeAll
+	static void init() {
 		
 		Main.employeeHM = new HashMap<>();
 		Main.searchHM = new HashMap<>();
@@ -41,9 +46,12 @@ class MainTest {
 		DB.ADD("ADD, , , ,05101762,VCUHLE HMU,CL4,010-3988-9289,20030819,PRO".split(","));
 	}
 	
+	
+	
 	@Test
 	void AddTest() {
 		init();
+		
 		String tmp = "ADD, , , ,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV";
 		String [] temp = tmp.split(",");
 		
@@ -55,12 +63,13 @@ class MainTest {
 	void DelTest() {
 		
 		init();
+		
 		String t1 = "DEL, , , ,employeeNum,18115040";
 		String t2 = "DEL,-p, , ,employeeNum,18115040";
+		String t3 = "DEL,-p, , ,employeeNum,18115040";
 		
 		assertEquals("DEL,1", DB.DEL(t1.split(",")).toString().trim());
 		assertEquals("DEL,NONE", DB.DEL(t2.split(",")).toString().trim());
-		
 		
 	}
 	
@@ -79,7 +88,7 @@ class MainTest {
 		assertEquals("MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO", DB.MOD(t2.split(",")).toString().trim());
 		assertEquals("MOD,08123556,WN XV,CL1,010-7986-5047,20100614,PRO", DB.MOD(t3.split(",")).toString().trim());
 		
-		
+		assertEquals("19", Main.employeeHM.size()+"");
 		
 	}
 	
