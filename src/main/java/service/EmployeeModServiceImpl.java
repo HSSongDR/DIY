@@ -6,6 +6,9 @@ import static constants.Constants.phoneSubKey;
 
 import java.util.PriorityQueue;
 
+import constants.Constants;
+import util.CmpString;
+
 public class EmployeeModServiceImpl extends EmployeeService {
 	
 	@Override
@@ -17,7 +20,7 @@ public class EmployeeModServiceImpl extends EmployeeService {
         // 대상 조회
         PriorityQueue<CmpString> aResult = schResult(tempsplit);
         // 프린트 옵션
-        String printString = schPrint("MOD", aResult, checkPrintType(tempsplit[1]));
+        String printString = schPrint(Constants.CMD_MOD, aResult, checkPrintType(tempsplit[1]));
 
 
         String modifyKey = tempsplit[6];

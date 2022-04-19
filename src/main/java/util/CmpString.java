@@ -1,7 +1,9 @@
-package service;
+package util;
 
-class CmpString implements Comparable<CmpString> {
-    String employeeNum;
+import constants.Constants;
+
+public class CmpString implements Comparable<CmpString> {
+    private String employeeNum;
 
     public CmpString(String employeeNum) {
         this.employeeNum = employeeNum;
@@ -25,8 +27,8 @@ class CmpString implements Comparable<CmpString> {
     }
 
     private String transformbirth(String origin) {
-        if ('0' <= origin.charAt(0) && origin.charAt(0) <= '2') {
-            return "1" + origin;
+        if (Constants.CHAR_ZERO <= origin.charAt(0) && origin.charAt(0) <= Constants.CHAR_TWO) {
+            return Constants.CHAR_ONE + origin;
         }
         return origin;
     }

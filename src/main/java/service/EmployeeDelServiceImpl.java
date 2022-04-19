@@ -2,6 +2,9 @@ package service;
 
 import java.util.PriorityQueue;
 
+import constants.Constants;
+import util.CmpString;
+
 public class EmployeeDelServiceImpl extends EmployeeService {
 	
 	@Override
@@ -14,7 +17,7 @@ public class EmployeeDelServiceImpl extends EmployeeService {
         // 대상 조회
         PriorityQueue<CmpString> aResult = schResult(tempsplit);
         // 프린트 옵션
-        String printString = schPrint("DEL", aResult, checkPrintType(tempsplit[1]));
+        String printString = schPrint(Constants.CMD_DEL, aResult, checkPrintType(tempsplit[1]));
 
         for (CmpString empNum : aResult) {
             employeeHM.get(empNum.getEmployeeNum()).setRemoveFlag();

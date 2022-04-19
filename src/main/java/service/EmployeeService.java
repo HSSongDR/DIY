@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+import constants.Constants;
 import dto.EmployeeInfo;
+import util.CmpString;
 
 public abstract class EmployeeService {
 	
@@ -32,18 +34,18 @@ public abstract class EmployeeService {
 	 }
 	
     protected static String checkPrintType(String printType){
-        return printType.equals(" ") ? "NUMBER" : "STRING";
+        return printType.equals(" ") ? Constants.NUMBER : Constants.STRING;
     }
     
-    protected static String printformat(String mode, String valueString) {
-        return mode + "," + valueString + "\n";
+    private static String printformat(String mode, String valueString) {
+        return mode + Constants.DELIMITER_COMMA + valueString + Constants.NEW_LINE;
     }
 
     protected static String schPrint(String mode, PriorityQueue<CmpString> aResult, String sOption) {
         String returnString = "";
-        if (aResult.size() == 0) return printformat(mode, "NONE");
+        if (aResult.size() == 0) return printformat(mode, Constants.NO_DATA);
 
-        if (sOption.equals("STRING")) {
+        if (sOption.equals(Constants.STRING)) {
             PriorityQueue<CmpString> tempResult = new PriorityQueue<>();
             int maxresult = 5;
 
@@ -55,7 +57,7 @@ public abstract class EmployeeService {
                 tempResult.offer(tempQueue);
             }
             aResult.addAll(tempResult);
-        } else if (sOption.equals("NUMBER")) {
+        } else if (sOption.equals(Constants.NUMBER)) {
             returnString = printformat(mode, aResult.size() + "");
         }
         return returnString;
@@ -63,7 +65,6 @@ public abstract class EmployeeService {
     
     protected static PriorityQueue<CmpString> schResult(String[] tempsplit) {
 
-//      employPQ = new PriorityQueue<>();
       PriorityQueue<CmpString> resultList = new PriorityQueue<>();
       String searchKey = tempsplit[4];
 
@@ -72,7 +73,7 @@ public abstract class EmployeeService {
       }
       String searchValue = searchKey + tempsplit[5];
 
-      if (searchKey.equals("employeeNum")) {
+      if (searchKey.equals(Constants.EMP_NUM)) {
           if (employeeHM.containsKey(tempsplit[5]) && !employeeHM.get(tempsplit[5]).getRemoveFlag()) {
               resultList.offer(new CmpString(tempsplit[5]));
           }
@@ -82,7 +83,7 @@ public abstract class EmployeeService {
               String sEmpNum = searchHM.get(searchValue).poll().getEmployeeNum();
               if (employeeHM.get(sEmpNum).getRemoveFlag()) continue;
               if (!employeeHM.get(sEmpNum).getObj(searchKey).equals(tempsplit[5])) continue;
-              //refactoring 필요할듯합니다
+              //TO-DO refactoring
               if (cache.size() == 0) {
                   cache.add(new CmpString(sEmpNum));
                   resultList.offer(new CmpString(sEmpNum));

@@ -3,6 +3,9 @@ package service;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
+import constants.Constants;
+import util.CmpString;
+
 public class EmployeeSchServiceImpl extends EmployeeService{
 	
 	@Override
@@ -13,7 +16,7 @@ public class EmployeeSchServiceImpl extends EmployeeService{
 	    
     private static String SCH(String[] tempsplit) {
         PriorityQueue<CmpString> aResult = schResult(tempsplit);
-        return schPrint("SCH", aResult, checkPrintType(tempsplit[1]));
+        return schPrint(Constants.CMD_SCH, aResult, checkPrintType(tempsplit[1]));
     }
 
 

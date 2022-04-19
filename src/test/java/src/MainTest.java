@@ -76,7 +76,7 @@ class MainTest {
 		String tmp = "ADD, , , ,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV";
 		String [] temp = tmp.split(",");
 		
-		assertEquals("26", EmployeeService.employeeHM.size()+"");
+		assertEquals("31", EmployeeService.employeeHM.size()+"");
 		 
 	}
 	
@@ -93,7 +93,11 @@ class MainTest {
 		
 		//assertEquals("DEL,1", DB.run(t1.split(",")).toString().trim());
 		//assertEquals("DEL,NONE", DB.run(t2.split(",")).toString().trim());
-		assertEquals("DEL,7", DB.run(t4.split(",")).toString().trim());
+		assertEquals("DEL,96555555,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,99666666,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,01345678,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,05222222,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,17111236,VSID TVO,CL1,010-3669-1077,20120718,PRO", DB.run(t4.split(",")).toString().trim());
 		
 	}
 	
@@ -110,6 +114,7 @@ class MainTest {
 				+ "DEL,00000000,N DY,CL1,010-3669-1077,20120718,PRO\n"
 				+ "DEL,00000001,N DY,CL1,010-3669-1077,20120718,PRO", DB.run(t1.split(",")).toString().trim());
 		
+		assertEquals("31", EmployeeService.employeeHM.size()+"");
 	}
 	
 	
@@ -130,7 +135,7 @@ class MainTest {
 		assertEquals("MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO", DB.run(t2.split(",")).toString().trim());
 		assertEquals("MOD,08123556,WN XV,CL1,010-7986-5047,20100614,PRO", DB.run(t3.split(",")).toString().trim());
 		assertEquals("MOD,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV", DB.run(t4.split(",")).toString().trim());
-		assertEquals("26", EmployeeService.employeeHM.size()+"");
+		assertEquals("31", EmployeeService.employeeHM.size()+"");
 		
 	}
 	
