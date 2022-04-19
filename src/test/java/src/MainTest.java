@@ -121,7 +121,7 @@ class MainTest {
 		
 		tmp =  "SCH, , , ,name,TEMP TEMP";
 		
-		assertEquals("SCH,2500",  SCH.run(tmp.split(",")).toString().trim());
+		assertEquals("SCH,2501",  SCH.run(tmp.split(",")).toString().trim());
 		 
 	}
 	
@@ -198,5 +198,51 @@ class MainTest {
 		
 		
 	}
+	
+	@Test
+	void SchOpt2Test() {
+		
+		EmployeeService ADD = new EmployeeAddServiceImpl();
+		EmployeeService SCH = new EmployeeSchServiceImpl();
+		EmployeeService MOD = new EmployeeModServiceImpl();
+		EmployeeService DEL = new EmployeeDelServiceImpl();	
+		                     
+		
+		String str = "ADD, , , ,80000000,TEMP TEMP2,CL1,010-3669-1077,99990101,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000001,TEMP TEMP2,CL1,010-3669-1077,99990101,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000002,TEMP TEMP2,CL1,010-3669-1077,99990101,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000003,TEMP3 TEMP2,CL1,010-3669-1077,99990123,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000004,TEMP1 TEMP2,CL1,010-3669-1077,99991201,PRO";
+		ADD.run(str.split(","));
+		
+		
+		String tmp =  "SCH, , , ,name,TEMP TEMP2";	
+		assertEquals("SCH,3",  SCH.run(tmp.split(",")).toString().trim());
+		
+		tmp =  "SCH, ,-f, ,name,TEMP";	
+		assertEquals("SCH,3",  SCH.run(tmp.split(",")).toString().trim());
 
+
+		tmp =  "SCH, ,-l, ,name,TEMP2";	
+		assertEquals("SCH,5",  SCH.run(tmp.split(",")).toString().trim());
+		
+		tmp = "MOD, ,-f, ,name,TEMP,birthday,12121201";
+		MOD.run(tmp.split(","));
+		
+		tmp =  "SCH, , , ,birthday,12121201";	
+		assertEquals("SCH,3",  SCH.run(tmp.split(",")).toString().trim());
+		
+		tmp =  "SCH, ,-d, ,birthday,01";	
+		assertEquals("SCH,6",  SCH.run(tmp.split(",")).toString().trim());
+		 
+	}
+	
 }
