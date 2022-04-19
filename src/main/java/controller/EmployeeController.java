@@ -37,11 +37,11 @@ public class EmployeeController {
         inputFilePath = args[0];
         outputFilePath = args[1];
 
-        runExmployeeService();
+        runEmployeeService();
         checkAnswer(answerFilePath, outputFilePath);
     }
 
-    private static void runExmployeeService() throws IOException {
+    private static void runEmployeeService() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(inputFilePath));
         EmployeeService.INIT();
 

@@ -14,7 +14,7 @@ public class EmployeeSchServiceImpl extends EmployeeService{
 		return SCH(tempsplit);
 	}
 	    
-    private static String SCH(String[] tempsplit) {
+    private String SCH(String[] tempsplit) {
         PriorityQueue<CmpString> aResult = schResult(tempsplit);
         return schPrint(Constants.CMD_SCH, aResult, checkPrintType(tempsplit[1]));
     }
