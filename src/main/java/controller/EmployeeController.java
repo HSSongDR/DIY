@@ -50,7 +50,7 @@ public class EmployeeController {
         }
 
 
-        runExmployeeService();
+        runEmployeeService();
         //checkAnswer(answerFilePath, outputFilePath);
     }
 
@@ -60,7 +60,7 @@ public class EmployeeController {
         return matcher.find();
     }
 
-    private static void runExmployeeService() throws IOException {
+    private static void runEmployeeService() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(inputFilePath));
         EmployeeService.INIT();
 
