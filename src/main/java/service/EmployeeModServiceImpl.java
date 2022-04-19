@@ -24,9 +24,6 @@ public class EmployeeModServiceImpl extends EmployeeService {
 
 
         String modifyKey = tempsplit[6];
-        if (!tempsplit[2].equals(" ")) {
-            modifyKey += tempsplit[2].substring(1, 2);
-        }
 
         for (CmpString empNum : aResult) {
 
