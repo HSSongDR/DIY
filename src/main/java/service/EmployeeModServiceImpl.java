@@ -15,14 +15,6 @@ public class EmployeeModServiceImpl extends EmployeeService {
 		return MOD(tempsplit);
 	}
 	
-    public static String[] getSubKey(String subKeyName){
-        String[] returnArray = {""};
-        if(subKeyName.equals(Constants.EMP_NAME)) return Constants.nameSubKey;
-        else if(subKeyName.equals(Constants.EMP_PHONE)) return Constants.phoneSubKey;
-        else if(subKeyName.equals(Constants.EMP_BIRTH)) return Constants.birthSubKey;
-        return returnArray;
-    }
-	
     private String MOD(String[] tempsplit) {
         // 대상 조회
         PriorityQueue<CmpString> aResult = schResult(tempsplit);

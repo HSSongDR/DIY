@@ -108,5 +108,13 @@ public abstract class EmployeeService {
             searchHM.put(searchkey, pq);
         }
     }
+    
+    protected String[] getSubKey(String subKeyName){
+        String[] returnArray = {""};
+        if(subKeyName.equals(Constants.EMP_NAME)) return Constants.nameSubKey;
+        else if(subKeyName.equals(Constants.EMP_PHONE)) return Constants.phoneSubKey;
+        else if(subKeyName.equals(Constants.EMP_BIRTH)) return Constants.birthSubKey;
+        return returnArray;
+    }
 	
 }
