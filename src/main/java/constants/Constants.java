@@ -1,7 +1,16 @@
 package constants;
 
 public class Constants {
-	
+
+	public static String inputFilePath = "./DIY/src/input.txt";
+	public static String outputFilePath = "./DIY/src/output.txt";
+	public static String answerFilePath = "./DIY/src/answer.txt";
+
+	public static String[] searchKey = {"name", "namef", "namel", "cl", "phoneNum", "phoneNumm", "phoneNuml", "birthday", "birthdayy", "birthdaym", "birthdayd", "certi"};
+	public static String[] nameSubKey = {"namef", "namel"};
+	public static String[] phoneSubKey = {"phoneNumm", "phoneNuml"};
+	public static String[] birthSubKey = {"birthdayy", "birthdaym", "birthdayd"};
+
 	public static final String EMP_NUM = "employeeNum";
 	public static final String EMP_NAME = "name";
 	public static final String EMP_CL = "cl";

@@ -1,20 +1,71 @@
 package Service;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-
+import static constants.Constants.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.HashMap;
 
 import VO.EmployeeInfo;
 
+
+class cmpString implements Comparable<cmpString> {
+    String employeeNum;
+
+    public cmpString(String employeeNum) {
+        this.employeeNum = employeeNum;
+    }
+
+    public String getEmployeeNum() {
+        return employeeNum;
+    }
+
+
+    @Override
+    public int compareTo(cmpString o) {
+        int originBirth = Integer.parseInt(transformbirth(this.employeeNum.substring(0, 2)));
+        String originEmpno = this.employeeNum.substring(2, 8);
+        int targetBirth = Integer.parseInt(transformbirth(o.employeeNum.substring(0, 2)));
+        String targetEmpno = o.employeeNum.substring(2, 8);
+        if (targetBirth != originBirth) return (targetBirth - originBirth) > 0 ? -1 : 1;
+        else {
+            return originEmpno.compareTo(targetEmpno);
+        }
+    }
+
+    private String transformbirth(String origin) {
+        if ('0' <= origin.charAt(0) && origin.charAt(0) <= '2') {
+            return "1" + origin;
+        }
+        return origin;
+    }
+}
+
 public class DB extends Main {
 
-    private static PriorityQueue<String> employPQ;
+    public static HashMap<String, EmployeeInfo> employeeHM;
+    public static HashMap<String, PriorityQueue<cmpString>> searchHM;
 
-    private static String[] searchKey = {"name", "namef", "namel", "cl", "phoneNum", "phoneNumm", "phoneNuml", "birthday", "birthdayy", "birthdaym", "birthdayd", "certi"};
-    private static String[] makeSubKey = {"name", "phoneNum", "birthday"};
-    private static String[] nameSubKey = {"namef", "namel"};
-    private static String[] phoneSubKey = {"phoneNumm", "phoneNuml"};
-    private static String[] birthSubKey = {"birthdayy", "birthdaym", "birthdayd"};
+    public static void INIT() {
+        employeeHM = new HashMap<>();
+        searchHM = new HashMap<>();
+        try {
+            Files.delete(Paths.get(outputFilePath));
+            File file = new File(outputFilePath);
+        } catch (Exception e) {
+            System.out.println("output File Delete Fail");
+        }
+    }
+
+
+    private static String printformat(String mode, String valueString) {
+        return mode + "," + valueString + "\n";
+    }
+
 
     private static void createSearchHM(EmployeeInfo newEmployeeInfo) {
 
@@ -37,7 +88,6 @@ public class DB extends Main {
 
     public static void ADD(String[] tempsplit) {
 
-
         if (tempsplit.length < 10) System.out.println("ADD_FAIL :: Insert Null Data");
 
         EmployeeInfo newEmployeeInfo =
@@ -48,35 +98,40 @@ public class DB extends Main {
     }
 
     public static String SCH(String[] tempsplit) {
-//        SCH,-p,-d, ,birthday,04
         PriorityQueue<cmpString> aResult = schResult(tempsplit);
-
-        //print option
-        return schPrint("SCH", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+        return schPrint("SCH", aResult, checkPrintTyep(tempsplit[1]));
     }
 
-    private static String schPrint(String mod, PriorityQueue<cmpString> aResult, String sOption) {
+    private static String checkPrintTyep(String printType){
+        return printType.equals(" ") ? "NUMBER" : "STRING";
+    }
+
+    private static String schPrint(String mode, PriorityQueue<cmpString> aResult, String sOption) {
         String returnString = "";
-        if (aResult.size() == 0) return mod + "," + "NONE"+ "\n";
+        if (aResult.size() == 0) return printformat(mode, "NONE");
+
         if (sOption.equals("STRING")) {
-
-            // 전체 LIST의 EMPLOYEE NO 기준으로 정렬하는 기능 추가 필요함.
+            PriorityQueue<cmpString> tempResult = new PriorityQueue<>();
             int maxresult = 5;
-            if (aResult.size() < 5) maxresult = aResult.size();
-            for (int i = 0; i < maxresult; i++) {
-                returnString += mod + "," + employeeHM.get(aResult.poll().getEmployeeNum()).toString() + "\n";
-            }
-        } else if (sOption.equals("NUMBER")) {
-            returnString = mod + "," + aResult.size() + "\n";
-        }
 
+            if (aResult.size() < maxresult) maxresult = aResult.size();
+
+            for (int i = 0; i < maxresult; i++) {
+                cmpString tempQueue = aResult.poll();
+                returnString += printformat(mode, employeeHM.get(tempQueue.getEmployeeNum()).toString());
+                tempResult.offer(tempQueue);
+            }
+            aResult.addAll(tempResult);
+        } else if (sOption.equals("NUMBER")) {
+            returnString = printformat(mode, aResult.size() + "");
+        }
         return returnString;
     }
 
     private static PriorityQueue<cmpString> schResult(String[] tempsplit) {
 
 //        employPQ = new PriorityQueue<>();
-        PriorityQueue<cmpString> resultList=new PriorityQueue<>();
+        PriorityQueue<cmpString> resultList = new PriorityQueue<>();
         String searchKey = tempsplit[4];
 
         if (!tempsplit[2].equals(" ")) {
@@ -89,22 +144,21 @@ public class DB extends Main {
                 resultList.offer(new cmpString(tempsplit[5]));
             }
         } else if (searchHM.containsKey(searchValue)) {
-            ArrayList<cmpString> cache=new ArrayList<>();
-            while(!searchHM.get(searchValue).isEmpty()){
+            ArrayList<cmpString> cache = new ArrayList<>();
+            while (!searchHM.get(searchValue).isEmpty()) {
                 String sEmpNum = searchHM.get(searchValue).poll().getEmployeeNum();
                 if (employeeHM.get(sEmpNum).getRemoveFlag()) continue;
                 if (!employeeHM.get(sEmpNum).getObj(searchKey).equals(tempsplit[5])) continue;
                 //refactoring 필요할듯합니다
-                if(cache.size()==0){
+                if (cache.size() == 0) {
                     cache.add(new cmpString(sEmpNum));
                     resultList.offer(new cmpString(sEmpNum));
                     continue;
-                }
-                else if(cache.size()!=0&&cache.get(cache.size()-1).getEmployeeNum().equals(sEmpNum))continue;
+                } else if (cache.size() != 0 && cache.get(cache.size() - 1).getEmployeeNum().equals(sEmpNum)) continue;
                 cache.add(new cmpString(sEmpNum));
                 resultList.offer(new cmpString(sEmpNum));
             }
-            for(cmpString tmp:cache){
+            for (cmpString tmp : cache) {
                 searchHM.get(searchValue).offer(tmp);
             }
         }
@@ -116,13 +170,12 @@ public class DB extends Main {
         // 대상 조회
         PriorityQueue<cmpString> aResult = schResult(tempsplit);
         // 프린트 옵션
-        String sSearchResult = schPrint("DEL", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+        String printString = schPrint("DEL", aResult, checkPrintTyep(tempsplit[1]));
 
         for (cmpString empNum : aResult) {
             employeeHM.get(empNum.getEmployeeNum()).setRemoveFlag();
         }
-
-        return sSearchResult;
+        return printString;
     }
 
 
@@ -130,7 +183,7 @@ public class DB extends Main {
         // 대상 조회
         PriorityQueue<cmpString> aResult = schResult(tempsplit);
         // 프린트 옵션
-        String sSearchResult = schPrint("MOD", aResult, (tempsplit[1].equals(" ") ? "NUMBER" : "STRING"));
+        String printString = schPrint("MOD", aResult, checkPrintTyep(tempsplit[1]));
 
 
         String modifyKey = tempsplit[6];
@@ -138,10 +191,8 @@ public class DB extends Main {
             modifyKey += tempsplit[2].substring(1, 2);
         }
 
-
-        //MOD,-p, , ,name,FB NTAWR,cl,CL3
         for (cmpString empNum : aResult) {
-            //원본 변경
+
             employeeHM.get(empNum.getEmployeeNum()).setObj(tempsplit[6], tempsplit[7]);
 
             checkSearchHM(modifyKey + employeeHM.get(empNum.getEmployeeNum()).getObj(modifyKey), empNum.getEmployeeNum());
@@ -160,7 +211,7 @@ public class DB extends Main {
             }
         }
 
-        return sSearchResult;
+        return printString;
     }
 
 }
