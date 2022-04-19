@@ -74,16 +74,15 @@ public abstract class EmployeeService {
       String searchValue = searchKey + tempsplit[5];
 
       if (searchKey.equals(Constants.EMP_NUM)) {
-          if (employeeHM.containsKey(tempsplit[5]) && !employeeHM.get(tempsplit[5]).getRemoveFlag()) {
+          if (employeeHM.containsKey(tempsplit[5])) {
               resultList.offer(new CmpString(tempsplit[5]));
           }
       } else if (searchHM.containsKey(searchValue)) {
           ArrayList<CmpString> cache = new ArrayList<>();
           while (!searchHM.get(searchValue).isEmpty()) {
               String sEmpNum = searchHM.get(searchValue).poll().getEmployeeNum();
-              if (employeeHM.get(sEmpNum).getRemoveFlag()) continue;
+              if(!employeeHM.containsKey(sEmpNum)) continue;
               if (!employeeHM.get(sEmpNum).getObj(searchKey).equals(tempsplit[5])) continue;
-              //TO-DO refactoring
               if (cache.size() == 0) {
                   cache.add(new CmpString(sEmpNum));
                   resultList.offer(new CmpString(sEmpNum));

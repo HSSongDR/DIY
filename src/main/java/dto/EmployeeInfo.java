@@ -81,7 +81,13 @@ public class EmployeeInfo {
         else if (sObject.equals("birthdayd")) this.birthdayd = changeValue;
         else if (sObject.equals("certi")) this.certi = changeValue;
     }
-
+    public static String[] getSubKey(String subKeyName){
+        String[] returnArray = {""};
+        if(subKeyName.equals("name")) return Constants.nameSubKey;
+        else if(subKeyName.equals("phoneNum")) return Constants.phoneSubKey;
+        else if(subKeyName.equals("birthday")) return Constants.birthSubKey;
+        return returnArray;
+    }
 
     public void setRemoveFlag() {
         removeflag = true;

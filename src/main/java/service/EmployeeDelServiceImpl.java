@@ -20,7 +20,7 @@ public class EmployeeDelServiceImpl extends EmployeeService {
         String printString = schPrint(Constants.CMD_DEL, aResult, checkPrintType(tempsplit[1]));
 
         for (CmpString empNum : aResult) {
-            employeeHM.get(empNum.getEmployeeNum()).setRemoveFlag();
+            employeeHM.remove(empNum.getEmployeeNum());
         }
         return printString;
     }

@@ -7,6 +7,7 @@ public class Constants {
 	public static String answerFilePath = "./DIY/src/answer.txt";
 
 	public static String[] searchKey = {"name", "namef", "namel", "cl", "phoneNum", "phoneNumm", "phoneNuml", "birthday", "birthdayy", "birthdaym", "birthdayd", "certi"};
+	public static String[] useSubKey = {"name", "phoneNum","birthday"};
 	public static String[] nameSubKey = {"namef", "namel"};
 	public static String[] phoneSubKey = {"phoneNumm", "phoneNuml"};
 	public static String[] birthSubKey = {"birthdayy", "birthdaym", "birthdayd"};
