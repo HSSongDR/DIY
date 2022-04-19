@@ -27,9 +27,15 @@ public class CmpString implements Comparable<CmpString> {
     }
 
     private int transformbirth(String origin) {
-        if (Constants.CHAR_ZERO <= origin.charAt(0) && origin.charAt(0) <= Constants.CHAR_TWO) {
-            return Integer.parseInt(Constants.CHAR_ONE + origin);
+        int ret=0;
+        try {
+            if (Constants.CHAR_ZERO <= origin.charAt(0) && origin.charAt(0) <= Constants.CHAR_TWO) {
+                ret= Integer.parseInt(Constants.CHAR_ONE + origin);
+            }
+            else ret= Integer.parseInt(origin);
+        }catch (NumberFormatException e){
+            System.err.println("parseInt is Invalid");
         }
-        return Integer.parseInt(origin);
+        return ret;
     }
 }
