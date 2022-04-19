@@ -1,4 +1,4 @@
-package VO;
+package dto;
 
 import java.util.Objects;
 
