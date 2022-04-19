@@ -159,7 +159,7 @@ class MainTest {
 				+ "DEL,00000000,N DY,CL1,010-3669-1077,20120718,PRO\n"
 				+ "DEL,00000001,N DY,CL1,010-3669-1077,20120718,PRO", DB.run(t1.split(",")).toString().trim());
 		
-		assertEquals("31", EmployeeService.employeeHM.size()+"");
+		assertEquals("26", EmployeeService.employeeHM.size()+"");
 	}
 	
 	

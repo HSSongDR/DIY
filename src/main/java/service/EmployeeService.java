@@ -33,15 +33,15 @@ public abstract class EmployeeService {
 	    }
 	 }
 	
-    protected static String checkPrintType(String printType){
+    protected String checkPrintType(String printType){
         return printType.equals(" ") ? Constants.NUMBER : Constants.STRING;
     }
     
-    private static String printformat(String mode, String valueString) {
+    private String printformat(String mode, String valueString) {
         return mode + Constants.DELIMITER_COMMA + valueString + Constants.NEW_LINE;
     }
 
-    protected static String schPrint(String mode, PriorityQueue<CmpString> aResult, String sOption) {
+    protected String schPrint(String mode, PriorityQueue<CmpString> aResult, String sOption) {
         String returnString = "";
         if (aResult.size() == 0) return printformat(mode, Constants.NO_DATA);
 
@@ -63,7 +63,7 @@ public abstract class EmployeeService {
         return returnString;
     }
     
-    protected static PriorityQueue<CmpString> schResult(String[] tempsplit) {
+    protected PriorityQueue<CmpString> schResult(String[] tempsplit) {
 
       PriorityQueue<CmpString> resultList = new PriorityQueue<>();
       String searchKey = tempsplit[4];
@@ -99,7 +99,7 @@ public abstract class EmployeeService {
   }
   
     
-    protected static void checkSearchHM(String searchkey, String newEmployeeNum) {
+    protected void checkSearchHM(String searchkey, String newEmployeeNum) {
         if (searchHM.containsKey(searchkey)) {
             searchHM.get(searchkey).offer(new CmpString(newEmployeeNum));
         } else {
@@ -107,6 +107,14 @@ public abstract class EmployeeService {
             pq.offer(new CmpString(newEmployeeNum));
             searchHM.put(searchkey, pq);
         }
+    }
+    
+    protected String[] getSubKey(String subKeyName){
+        String[] returnArray = {""};
+        if(subKeyName.equals(Constants.EMP_NAME)) return Constants.nameSubKey;
+        else if(subKeyName.equals(Constants.EMP_PHONE)) return Constants.phoneSubKey;
+        else if(subKeyName.equals(Constants.EMP_BIRTH)) return Constants.birthSubKey;
+        return returnArray;
     }
 	
 }

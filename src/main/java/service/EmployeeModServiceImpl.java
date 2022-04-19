@@ -1,7 +1,6 @@
 package service;
 
 
-import static dto.EmployeeInfo.getSubKey;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
@@ -16,7 +15,7 @@ public class EmployeeModServiceImpl extends EmployeeService {
 		return MOD(tempsplit);
 	}
 	
-    private static String MOD(String[] tempsplit) {
+    private String MOD(String[] tempsplit) {
         // 대상 조회
         PriorityQueue<CmpString> aResult = schResult(tempsplit);
         // 프린트 옵션

@@ -13,7 +13,7 @@ public class EmployeeDelServiceImpl extends EmployeeService {
 		return DEL(tempsplit);
 	}
 	
-    private static String DEL(String[] tempsplit) {
+    private String DEL(String[] tempsplit) {
         // 대상 조회
         PriorityQueue<CmpString> aResult = schResult(tempsplit);
         // 프린트 옵션
