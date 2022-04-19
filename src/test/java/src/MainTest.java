@@ -245,4 +245,25 @@ class MainTest {
 		 
 	}
 	
+	@Test
+	void performanceTest() {
+		EmployeeService ADD = new EmployeeAddServiceImpl();
+		EmployeeService SCH = new EmployeeSchServiceImpl();
+		EmployeeService MOD = new EmployeeModServiceImpl();
+		EmployeeService DEL = new EmployeeDelServiceImpl();	
+		
+		for(int i=0;i<100000;i++) {
+			// 5000개 INSERT
+			String str = "ADD, , , ,"+(i+10000000)+",A B,CL1,010-3669-1077,99990101,PRO";
+			ADD.run(str.split(","));
+		}
+		
+		String tmp = "MOD, , , ,certi,PRO,certi,ADV";
+		assertEquals("MOD,100023",  MOD.run(tmp.split(",")).toString().trim());
+		
+		tmp =  "SCH, , , ,certi,ADV";	
+		assertEquals("SCH,100031",  SCH.run(tmp.split(",")).toString().trim());
+	
+	}
+	
 }
