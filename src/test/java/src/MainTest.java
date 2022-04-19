@@ -71,12 +71,57 @@ class MainTest {
 	@Test
 	void AddTest() {
 		
-		
-		
+
 		String tmp = "ADD, , , ,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV";
-		String [] temp = tmp.split(",");
 		
 		assertEquals("31", EmployeeService.employeeHM.size()+"");
+		 
+	}
+	
+	
+	@Test
+	void SchManyItemTest() {
+		
+		EmployeeService DB = new EmployeeAddServiceImpl();
+		EmployeeService SCH = new EmployeeSchServiceImpl();
+		EmployeeService MOD = new EmployeeModServiceImpl();
+		EmployeeService DEL = new EmployeeDelServiceImpl();	
+		                     
+		for(int i=10000000;i<10005000;i++) {
+			// 5000개 INSERT
+			String str = "ADD, , , ,"+i+",TEMP TEMP,CL1,010-3669-1077,99990101,PRO";
+			DB.run(str.split(","));
+		}
+		
+		String tmp =  "SCH, , , ,name,TEMP TEMP";	
+		assertEquals("SCH,5000",  SCH.run(tmp.split(",")).toString().trim());
+		
+		int birth = 20120718;
+		int cnt = 1 ;
+		for(int i=10002500;i<10005000;i++) {
+			// 5000개 INSERT
+			String str = "MOD, , , ,employeeNum,"+i+",birthday,"+birth+cnt;
+			MOD.run(str.split(","));
+			cnt++;
+		}
+		
+		tmp = "SCH, , , ,birthday,99990101";	
+		
+		assertEquals("SCH,2500",  SCH.run(tmp.split(",")).toString().trim());
+		assertEquals("SCH,2500",  SCH.run(tmp.split(",")).toString().trim());
+		
+	
+		for(int i=10002501;i<10005000;i++) {
+			// 5000개 INSERT
+			String str = "DEL, , , ,employeeNum,"+i;
+			DEL.run(str.split(","));
+			cnt++;
+		}
+		
+		
+		tmp =  "SCH, , , ,name,TEMP TEMP";
+		
+		assertEquals("SCH,2500",  SCH.run(tmp.split(",")).toString().trim());
 		 
 	}
 	
