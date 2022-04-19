@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import controller.EmployeeController;
@@ -19,8 +20,8 @@ class MainTest {
 	
 	
 	
-	@BeforeAll
-	static void init() {
+	@BeforeEach
+	void init() {
 		
 		
 		EmployeeService DB = new EmployeeAddServiceImpl();
@@ -50,12 +51,18 @@ class MainTest {
 		DB.run("ADD, , , ,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,19640130,PRO".split(","));
 		DB.run("ADD, , , ,05101762,VCUHLE HMU,CL4,010-3988-9289,20030819,PRO".split(","));
 		
-		DB.run("ADD, , , ,12345678,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
-		DB.run("ADD, , , ,22222222,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
-		DB.run("ADD, , , ,33333333,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
-		DB.run("ADD, , , ,44444444,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
-		DB.run("ADD, , , ,55555555,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
-		DB.run("ADD, , , ,66666666,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,01345678,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,05222222,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,19333333,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,20444444,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,96555555,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,99666666,VSID TVO,CL1,010-3669-1077,20120718,PRO".split(","));
+		
+		DB.run("ADD, , , ,99000000,N DY,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,99999999,N DY,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,99000001,N DY,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,00000000,N DY,CL1,010-3669-1077,20120718,PRO".split(","));
+		DB.run("ADD, , , ,00000001,N DY,CL1,010-3669-1077,20120718,PRO".split(","));
 		
 	}
 	
@@ -82,11 +89,26 @@ class MainTest {
 		String t2 = "DEL,-p, , ,employeeNum,18115040";
 		String t3 = "DEL,-p, , ,employeeNum,18115040";
 		
-		String t4 = "DEL, , , ,name,VSID TVO";
+		String t4 = "DEL,-p, , ,name,VSID TVO";
 		
-		assertEquals("DEL,1", DB.run(t1.split(",")).toString().trim());
-		assertEquals("DEL,NONE", DB.run(t2.split(",")).toString().trim());
+		//assertEquals("DEL,1", DB.run(t1.split(",")).toString().trim());
+		//assertEquals("DEL,NONE", DB.run(t2.split(",")).toString().trim());
 		assertEquals("DEL,7", DB.run(t4.split(",")).toString().trim());
+		
+	}
+	
+	@Test
+	void DelDupEmpNoTest() {
+		
+		EmployeeService DB = new EmployeeDelServiceImpl();
+		
+		String t1 = "DEL,-p, , ,name,N DY";
+		
+		assertEquals("DEL,99000000,N DY,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,99000001,N DY,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,99999999,N DY,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,00000000,N DY,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,00000001,N DY,CL1,010-3669-1077,20120718,PRO", DB.run(t1.split(",")).toString().trim());
 		
 	}
 	
