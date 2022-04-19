@@ -1,19 +1,29 @@
-package Service;
+package controller;
 
-import static constants.Constants.*;
+import static constants.Constants.CMD_ADD;
+import static constants.Constants.CMD_DEL;
+import static constants.Constants.CMD_MOD;
+import static constants.Constants.CMD_SCH;
+import static constants.Constants.answerFilePath;
+import static constants.Constants.inputFilePath;
+import static constants.Constants.outputFilePath;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-
-import Service.DB;
-import VO.EmployeeInfo;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
+import service.EmployeeAddServiceImpl;
+import service.EmployeeDelServiceImpl;
+import service.EmployeeModServiceImpl;
+import service.EmployeeSchServiceImpl;
+import service.EmployeeService;
 
-public class Main {
+
+
+public class EmployeeController {
 
     public static void main(String[] args) throws IOException {
         systemTest();
@@ -21,20 +31,26 @@ public class Main {
 
     private static void systemTest() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(inputFilePath));
-        DB.INIT();
+        EmployeeService.INIT();
+        
+        EmployeeService addService = new EmployeeAddServiceImpl();
+        EmployeeService modService = new EmployeeModServiceImpl();
+        EmployeeService delService = new EmployeeDelServiceImpl();
+        EmployeeService schService = new EmployeeSchServiceImpl();
+        
         while (true) {
             String temp = br.readLine();
             if (temp == null) break;
             String[] tempsplit = temp.split(",");
 
             if (tempsplit[0].equals(CMD_ADD)) {
-                DB.ADD(tempsplit);
+            	addService.run(tempsplit);
             } else if (tempsplit[0].equals(CMD_SCH)) {
-                printOut(DB.SCH(tempsplit));
+                printOut(schService.run(tempsplit));
             } else if (tempsplit[0].equals(CMD_DEL)) {
-                printOut(DB.DEL(tempsplit));
+                printOut(delService.run(tempsplit));
             } else if (tempsplit[0].equals(CMD_MOD)) {
-                printOut(DB.MOD(tempsplit));
+                printOut(modService.run(tempsplit));
             }
         }
 
