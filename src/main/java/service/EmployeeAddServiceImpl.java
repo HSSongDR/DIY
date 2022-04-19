@@ -2,6 +2,7 @@ package service;
 
 import static constants.Constants.searchKey;
 
+import constants.Constants;
 import dto.EmployeeInfo;
 
 public class EmployeeAddServiceImpl extends EmployeeService {
@@ -15,7 +16,7 @@ public class EmployeeAddServiceImpl extends EmployeeService {
 	
 	private void createSearchHM(EmployeeInfo newEmployeeInfo) {
 
-        String sEmployeeNum = newEmployeeInfo.getObj("employeeNum");
+        String sEmployeeNum = newEmployeeInfo.getObj(Constants.EMP_NUM);
         for (String search : searchKey) {
             checkSearchHM(search + newEmployeeInfo.getObj(search), sEmployeeNum);
         }

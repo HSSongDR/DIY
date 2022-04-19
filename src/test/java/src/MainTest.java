@@ -71,12 +71,57 @@ class MainTest {
 	@Test
 	void AddTest() {
 		
-		
-		
+
 		String tmp = "ADD, , , ,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV";
-		String [] temp = tmp.split(",");
 		
-		assertEquals("26", EmployeeService.employeeHM.size()+"");
+		assertEquals("31", EmployeeService.employeeHM.size()+"");
+		 
+	}
+	
+	
+	@Test
+	void SchManyItemTest() {
+		
+		EmployeeService DB = new EmployeeAddServiceImpl();
+		EmployeeService SCH = new EmployeeSchServiceImpl();
+		EmployeeService MOD = new EmployeeModServiceImpl();
+		EmployeeService DEL = new EmployeeDelServiceImpl();	
+		                     
+		for(int i=10000000;i<10005000;i++) {
+			// 5000개 INSERT
+			String str = "ADD, , , ,"+i+",TEMP TEMP,CL1,010-3669-1077,99990101,PRO";
+			DB.run(str.split(","));
+		}
+		
+		String tmp =  "SCH, , , ,name,TEMP TEMP";	
+		assertEquals("SCH,5000",  SCH.run(tmp.split(",")).toString().trim());
+		
+		int birth = 20120718;
+		int cnt = 1 ;
+		for(int i=10002500;i<10005000;i++) {
+			// 5000개 INSERT
+			String str = "MOD, , , ,employeeNum,"+i+",birthday,"+birth+cnt;
+			MOD.run(str.split(","));
+			cnt++;
+		}
+		
+		tmp = "SCH, , , ,birthday,99990101";	
+		
+		assertEquals("SCH,2500",  SCH.run(tmp.split(",")).toString().trim());
+		assertEquals("SCH,2500",  SCH.run(tmp.split(",")).toString().trim());
+		
+	
+		for(int i=10002501;i<10005000;i++) {
+			// 5000개 INSERT
+			String str = "DEL, , , ,employeeNum,"+i;
+			DEL.run(str.split(","));
+			cnt++;
+		}
+		
+		
+		tmp =  "SCH, , , ,name,TEMP TEMP";
+		
+		assertEquals("SCH,2501",  SCH.run(tmp.split(",")).toString().trim());
 		 
 	}
 	
@@ -93,7 +138,11 @@ class MainTest {
 		
 		//assertEquals("DEL,1", DB.run(t1.split(",")).toString().trim());
 		//assertEquals("DEL,NONE", DB.run(t2.split(",")).toString().trim());
-		assertEquals("DEL,7", DB.run(t4.split(",")).toString().trim());
+		assertEquals("DEL,96555555,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,99666666,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,01345678,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,05222222,VSID TVO,CL1,010-3669-1077,20120718,PRO\n"
+				+ "DEL,17111236,VSID TVO,CL1,010-3669-1077,20120718,PRO", DB.run(t4.split(",")).toString().trim());
 		
 	}
 	
@@ -110,6 +159,7 @@ class MainTest {
 				+ "DEL,00000000,N DY,CL1,010-3669-1077,20120718,PRO\n"
 				+ "DEL,00000001,N DY,CL1,010-3669-1077,20120718,PRO", DB.run(t1.split(",")).toString().trim());
 		
+		assertEquals("31", EmployeeService.employeeHM.size()+"");
 	}
 	
 	
@@ -130,7 +180,7 @@ class MainTest {
 		assertEquals("MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO", DB.run(t2.split(",")).toString().trim());
 		assertEquals("MOD,08123556,WN XV,CL1,010-7986-5047,20100614,PRO", DB.run(t3.split(",")).toString().trim());
 		assertEquals("MOD,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV", DB.run(t4.split(",")).toString().trim());
-		assertEquals("26", EmployeeService.employeeHM.size()+"");
+		assertEquals("31", EmployeeService.employeeHM.size()+"");
 		
 	}
 	
@@ -148,5 +198,51 @@ class MainTest {
 		
 		
 	}
+	
+	@Test
+	void SchOpt2Test() {
+		
+		EmployeeService ADD = new EmployeeAddServiceImpl();
+		EmployeeService SCH = new EmployeeSchServiceImpl();
+		EmployeeService MOD = new EmployeeModServiceImpl();
+		EmployeeService DEL = new EmployeeDelServiceImpl();	
+		                     
+		
+		String str = "ADD, , , ,80000000,TEMP TEMP2,CL1,010-3669-1077,99990101,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000001,TEMP TEMP2,CL1,010-3669-1077,99990101,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000002,TEMP TEMP2,CL1,010-3669-1077,99990101,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000003,TEMP3 TEMP2,CL1,010-3669-1077,99990123,PRO";
+		ADD.run(str.split(","));
+		
+		str = "ADD, , , ,80000004,TEMP1 TEMP2,CL1,010-3669-1077,99991201,PRO";
+		ADD.run(str.split(","));
+		
+		
+		String tmp =  "SCH, , , ,name,TEMP TEMP2";	
+		assertEquals("SCH,3",  SCH.run(tmp.split(",")).toString().trim());
+		
+		tmp =  "SCH, ,-f, ,name,TEMP";	
+		assertEquals("SCH,3",  SCH.run(tmp.split(",")).toString().trim());
 
+
+		tmp =  "SCH, ,-l, ,name,TEMP2";	
+		assertEquals("SCH,5",  SCH.run(tmp.split(",")).toString().trim());
+		
+		tmp = "MOD, ,-f, ,name,TEMP,birthday,12121201";
+		MOD.run(tmp.split(","));
+		
+		tmp =  "SCH, , , ,birthday,12121201";	
+		assertEquals("SCH,3",  SCH.run(tmp.split(",")).toString().trim());
+		
+		tmp =  "SCH, ,-d, ,birthday,01";	
+		assertEquals("SCH,6",  SCH.run(tmp.split(",")).toString().trim());
+		 
+	}
+	
 }

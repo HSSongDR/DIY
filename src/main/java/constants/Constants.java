@@ -36,6 +36,15 @@ public class Constants {
 	public static final String OPT2_BIRTH_DAY = "-d";
 	
 	public static final String DELIMITER_COMMA = ",";
+	
+	public static final String NUMBER = "NUMBER";
+	public static final String STRING = "STRING";
+	
+	public static final String NEW_LINE = "\n";
+	
+	public static final char CHAR_ZERO = '0';
+	public static final char CHAR_ONE = '1';
+	public static final char CHAR_TWO = '2';
 
 
 }
