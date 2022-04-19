@@ -4,9 +4,10 @@ import static constants.Constants.CMD_ADD;
 import static constants.Constants.CMD_DEL;
 import static constants.Constants.CMD_MOD;
 import static constants.Constants.CMD_SCH;
-import static constants.Constants.answerFilePath;
+
 import static constants.Constants.inputFilePath;
 import static constants.Constants.outputFilePath;
+import static constants.Constants.answerFilePath;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,8 +15,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import constants.Constants;
+
 import service.EmployeeAddServiceImpl;
 import service.EmployeeDelServiceImpl;
 import service.EmployeeModServiceImpl;
@@ -25,6 +28,8 @@ import service.EmployeeService;
 
 
 public class EmployeeController {
+
+    private static final String INPUT_OUTPUT_FILE_NAME_MATCHER = "^[a-z](?:_?[a-z0-9]+)*(\\.)(txt)$";
 
     public static void main(String[] args) throws IOException {
         if (args.length != 2) {
@@ -37,8 +42,22 @@ public class EmployeeController {
         inputFilePath = args[0];
         outputFilePath = args[1];
 
+        if (!fileNameCheck(inputFilePath) || !fileNameCheck(outputFilePath)) {
+            System.out.println("Illegal file name");
+            System.out.println("allowed pattern : " + INPUT_OUTPUT_FILE_NAME_MATCHER);
+            System.out.println("Exiting...");
+            return;
+        }
+
+
         runExmployeeService();
-        checkAnswer(answerFilePath, outputFilePath);
+        //checkAnswer(answerFilePath, outputFilePath);
+    }
+
+    private static boolean fileNameCheck(String fileName) {
+        Pattern pattern = Pattern.compile(INPUT_OUTPUT_FILE_NAME_MATCHER, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(fileName);
+        return matcher.find();
     }
 
     private static void runExmployeeService() throws IOException {

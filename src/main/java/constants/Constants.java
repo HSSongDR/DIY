@@ -2,9 +2,9 @@ package constants;
 
 public class Constants {
 
-	public static String inputFilePath = "./DIY/src/input.txt";
-	public static String outputFilePath = "./DIY/src/output.txt";
-	public static String answerFilePath = "./DIY/src/answer.txt";
+	public static String inputFilePath = "input.txt";
+	public static String outputFilePath = "output.txt";
+	public static String answerFilePath = "answer.txt";
 
 	public static String[] searchKey = {"name", "namef", "namel", "cl", "phoneNum", "phoneNumm", "phoneNuml", "birthday", "birthdayy", "birthdaym", "birthdayd", "certi"};
 	public static String[] nameSubKey = {"namef", "namel"};
