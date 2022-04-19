@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
+import constants.Constants;
 import service.EmployeeAddServiceImpl;
 import service.EmployeeDelServiceImpl;
 import service.EmployeeModServiceImpl;
@@ -26,25 +27,36 @@ import service.EmployeeService;
 public class EmployeeController {
 
     public static void main(String[] args) throws IOException {
-        systemTest();
+        if (args.length != 2) {
+            System.out.println("Unexpected argument");
+            System.out.println("Use : java -jar EmployeeManagement.jar [input file path] [output file path] ");
+            System.out.println("Exiting...");
+            return;
+        }
+
+        inputFilePath = args[0];
+        outputFilePath = args[1];
+
+        runExmployeeService();
+        checkAnswer(answerFilePath, outputFilePath);
     }
 
-    private static void systemTest() throws IOException {
+    private static void runExmployeeService() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(inputFilePath));
         EmployeeService.INIT();
-        
+
         EmployeeService addService = new EmployeeAddServiceImpl();
         EmployeeService modService = new EmployeeModServiceImpl();
         EmployeeService delService = new EmployeeDelServiceImpl();
         EmployeeService schService = new EmployeeSchServiceImpl();
-        
+
         while (true) {
             String temp = br.readLine();
             if (temp == null) break;
             String[] tempsplit = temp.split(",");
 
             if (tempsplit[0].equals(CMD_ADD)) {
-            	addService.run(tempsplit);
+                addService.run(tempsplit);
             } else if (tempsplit[0].equals(CMD_SCH)) {
                 printOut(schService.run(tempsplit));
             } else if (tempsplit[0].equals(CMD_DEL)) {
@@ -54,7 +66,10 @@ public class EmployeeController {
             }
         }
 
-        if (compareTwoFiles(answerFilePath, outputFilePath)) {
+    }
+
+    private static void checkAnswer(String ANSWER_FILE_PATH, String OUTPUT_FILE_PATH) throws IOException {
+        if (compareTwoFiles(ANSWER_FILE_PATH, OUTPUT_FILE_PATH)) {
             System.out.println("Pass");
         } else {
             System.out.println("Fail");
