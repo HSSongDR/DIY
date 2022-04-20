@@ -1,24 +1,20 @@
 package service;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import constants.Constants;
 import util.CmpString;
 
-public class EmployeeSchServiceImpl extends EmployeeService{
-	
+public class EmployeeSchServiceImpl extends EmployeeService {
+
 	@Override
-	public String run(String[] tempsplit) {
-		// TODO Auto-generated method stub
-		return SCH(tempsplit);
+	public String run(String[] lineSplitByComma) {
+		return SCH(lineSplitByComma);
 	}
-	    
-    private String SCH(String[] tempsplit) {
-        PriorityQueue<CmpString> aResult = schResult(tempsplit);
-        return schPrint(Constants.CMD_SCH, aResult, checkPrintType(tempsplit[1]));
-    }
 
-
+	private String SCH(String[] lineSplitByComma) {
+		PriorityQueue<CmpString> aResult = schResult(lineSplitByComma);
+		return schPrint(Constants.CMD_SCH, aResult, checkPrintType(lineSplitByComma[1]));
+	}
 
 }

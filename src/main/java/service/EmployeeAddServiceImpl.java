@@ -6,32 +6,32 @@ import constants.Constants;
 import dto.EmployeeInfo;
 
 public class EmployeeAddServiceImpl extends EmployeeService {
-	
+
 	@Override
-	public String run(String[] tempsplit) {
-		// TODO Auto-generated method stub
-		ADD(tempsplit);
-		return  "";
+	public String run(String[] lineSplitByComma) {
+		ADD(lineSplitByComma);
+		return "";
 	}
-	
+
 	private void createSearchHM(EmployeeInfo newEmployeeInfo) {
 
-        String sEmployeeNum = newEmployeeInfo.getObj(Constants.EMP_NUM);
-        for (String search : searchKey) {
-            checkSearchHM(search + newEmployeeInfo.getObj(search), sEmployeeNum);
-        }
-    }
-	
-	 private void ADD(String[] tempsplit) {
+		String sEmployeeNum = newEmployeeInfo.getObj(Constants.EMP_NUM);
+		for (String search : searchKey) {
+			checkSearchHM(search + newEmployeeInfo.getObj(search), sEmployeeNum);
+		}
+	}
 
-	        if (tempsplit.length < 10) System.out.println("ADD_FAIL :: Insert Null Data");
+	private void ADD(String[] lineSplitByComma) {
 
-	        EmployeeInfo newEmployeeInfo =
-	                new EmployeeInfo(tempsplit[4], tempsplit[5], tempsplit[6], tempsplit[7], tempsplit[8], tempsplit[9]);
-	        employeeHM.put(tempsplit[4], newEmployeeInfo);
+		if (lineSplitByComma.length < 10)
+			System.out.println("ADD_FAIL :: Insert Null Data");
 
-	        createSearchHM(newEmployeeInfo);
-	        
+		EmployeeInfo newEmployeeInfo = new EmployeeInfo(lineSplitByComma[4], lineSplitByComma[5], lineSplitByComma[6],
+				lineSplitByComma[7], lineSplitByComma[8], lineSplitByComma[9]);
+		employeeHM.put(lineSplitByComma[4], newEmployeeInfo);
+
+		createSearchHM(newEmployeeInfo);
+
 	}
 
 }
